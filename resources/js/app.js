@@ -1,5 +1,13 @@
+var boardGrid = [
+                    ["E", "E", "E"],
+                    ["E", "E", "E"],
+                    ["E", "E", "E"]
+                ];
+
 $(document).ready(function() {
     $(".tic").click(function(){
-        $(this).addClass("pumpkin");
+        var gridId = $(this).data("grid-id");
+
+        
     });
 });
