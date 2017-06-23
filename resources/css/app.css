@@ -24,6 +24,10 @@ button {
     height: 100%;
 }
 
+#newGame {
+    width: 100px;
+    height:30px;
+}
 .pumpkin {
     background-color: #d35400;
 }

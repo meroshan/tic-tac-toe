@@ -1,15 +1,18 @@
 var boardGrid = ["E", "E", "E", "E", "E", "E", "E", "E", "E"];
 
-var running = false;
-
 $(document).ready(function() {
+    $("#newGame").click(function() {
+        location.reload();
+    });
 
     $(".tic").click(function() {
-        running = true;
         var gridId = $(this).data("grid-id");
 
         boardGrid[gridId] = "X";
+
         $(this).addClass("belize-hole");
+
+        var winner = checkWinner(boardGrid);
 
         var available = findAvailable(boardGrid);
 
@@ -47,4 +50,18 @@ function getRandomGridId(available)
     }
 
     return;
+}
+
+function checkWinner(board) {
+    if (board[0] == board[1] == board[2] == "X" ||
+        board[3] == board[4] == board[5] == "X" ||
+        board[6] == board[7] == board[8] == "X" ||
+        board[0] == board[3] == board[6] == "X" ||
+        board[1] == board[4] == board[7] == "X" ||
+        board[2] == board[5] == board[8] == "X" ||
+        board[0] == board[4] == board[8] == "X" ||
+        board[2] == board[4] == board[6] == "X" ) {
+            console.log(board)
+            alert("Player wins the match");
+        }
 }
