@@ -1,8 +1,11 @@
 var boardGrid = ["E", "E", "E", "E", "E", "E", "E", "E", "E"];
 
+var running = false;
+
 $(document).ready(function() {
     $("#newGame").click(function() {
         location.reload();
+        running = true;
     });
 
     $(".tic").click(function() {
@@ -12,9 +15,11 @@ $(document).ready(function() {
 
         $(this).addClass("belize-hole");
 
-        var winner = checkWinner(boardGrid);
+        checkWinner(boardGrid);
 
         var available = findAvailable(boardGrid);
+
+        checkTie(available);
 
         var randomGridId = getRandomGridId(available);
 
@@ -23,6 +28,8 @@ $(document).ready(function() {
         var selector = "[data-grid-id= " + randomGridId + "]";
 
         $(selector).addClass("pumpkin");
+
+        checkWinner(boardGrid);
     });
 });
 
@@ -30,7 +37,7 @@ function findAvailable(board) {
     var available = new Array();
     var avl = new Array();
 
-    for(var i=1; i<=9; i++) {
+    for(var i=0; i<9; i++) {
         if (board[i] == "E") {
             available.push(i);
         }
@@ -53,15 +60,34 @@ function getRandomGridId(available)
 }
 
 function checkWinner(board) {
-    if (board[0] == board[1] == board[2] == "X" ||
-        board[3] == board[4] == board[5] == "X" ||
-        board[6] == board[7] == board[8] == "X" ||
-        board[0] == board[3] == board[6] == "X" ||
-        board[1] == board[4] == board[7] == "X" ||
-        board[2] == board[5] == board[8] == "X" ||
-        board[0] == board[4] == board[8] == "X" ||
-        board[2] == board[4] == board[6] == "X" ) {
-            console.log(board)
-            alert("Player wins the match");
-        }
+    if ((board[0] == board[1] && board[1] == board[2] && board[0] == "X") ||
+        (board[3] == board[4] && board[4] == board[5] && board[3] == "X") ||
+        (board[6] == board[7] && board[7] == board[8] && board[6] == "X") ||
+        (board[0] == board[3] && board[3] == board[6] && board[0] == "X") ||
+        (board[1] == board[4] && board[4] == board[7] && board[1] == "X") ||
+        (board[2] == board[5] && board[5] == board[8] && board[2] == "X") ||
+        (board[0] == board[4] && board[4] == board[8] && board[0] == "X") ||
+        (board[2] == board[4] && board[4] == board[6] && board[2] == "X")) {
+            $("#winner").html("X won the match");
+            running = false;
+    }
+
+    if ((board[0] == board[1] && board[1] == board[2] && board[0] == "O") ||
+        (board[3] == board[4] && board[4] == board[5] && board[3] == "O") ||
+        (board[6] == board[7] && board[7] == board[8] && board[6] == "O") ||
+        (board[0] == board[3] && board[3] == board[6] && board[0] == "O") ||
+        (board[1] == board[4] && board[4] == board[7] && board[1] == "O") ||
+        (board[2] == board[5] && board[5] == board[8] && board[2] == "O") ||
+        (board[0] == board[4] && board[4] == board[8] && board[0] == "O") ||
+        (board[2] == board[4] && board[4] == board[6] && board[2] == "O")) {
+            // alert("O won the match");
+            $("#winner").html("O won the match");
+            running = false;
+    }
+}
+
+function checkTie(available) {
+    if (available.length == 0) {
+        $("#winner").html("Match Tied");
+    }
 }
