@@ -9,6 +9,14 @@ $(document).ready(function() {
     });
 
     $(".tic").click(function() {
+        var clickedX = checkClicked(this);
+
+        if (clickedX) {
+            alert("Already clicked");
+            return;
+        }
+        $(this).data("clicked", true);
+
         var gridId = $(this).data("grid-id");
 
         boardGrid[gridId] = "X";
@@ -27,7 +35,15 @@ $(document).ready(function() {
 
         var selector = "[data-grid-id= " + randomGridId + "]";
 
+        var clickedY = checkClicked(selector);
+
+        if (clickedY) {
+            alert("Already clicked");
+            return;
+        }
         $(selector).addClass("pumpkin");
+
+        $(selector).data("clicked", true);
 
         checkWinner(boardGrid);
     });
@@ -80,7 +96,6 @@ function checkWinner(board) {
         (board[2] == board[5] && board[5] == board[8] && board[2] == "O") ||
         (board[0] == board[4] && board[4] == board[8] && board[0] == "O") ||
         (board[2] == board[4] && board[4] == board[6] && board[2] == "O")) {
-            // alert("O won the match");
             $("#winner").html("O won the match");
             running = false;
     }
@@ -89,5 +104,13 @@ function checkWinner(board) {
 function checkTie(available) {
     if (available.length == 0) {
         $("#winner").html("Match Tied");
+    }
+}
+
+function checkClicked(selector) {
+    if ($(selector).data("clicked")) {
+        return true;
+    } else {
+        return false;
     }
 }
