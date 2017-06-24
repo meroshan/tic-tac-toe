@@ -3,12 +3,17 @@ var boardGrid = ["E", "E", "E", "E", "E", "E", "E", "E", "E"];
 var running = false;
 
 $(document).ready(function() {
+    running = true;
+
     $("#newGame").click(function() {
         location.reload();
-        running = true;
     });
 
     $(".tic").click(function() {
+        if (running == false) {
+            return;
+        }
+
         var clickedX = checkClicked(this);
 
         if (clickedX) {
@@ -68,7 +73,6 @@ function getRandomGridId(available)
 
     if (available.length) {
         var random = available[Math.floor(Math.random() * available.length)];
-
         return random;
     }
 
@@ -84,7 +88,8 @@ function checkWinner(board) {
         (board[2] == board[5] && board[5] == board[8] && board[2] == "X") ||
         (board[0] == board[4] && board[4] == board[8] && board[0] == "X") ||
         (board[2] == board[4] && board[4] == board[6] && board[2] == "X")) {
-            $("#winner").html("X won the match");
+            $(".winner-box").addClass("belize-hole");
+            $("#winner").html("\"X\" won the match");
             running = false;
     }
 
@@ -96,7 +101,8 @@ function checkWinner(board) {
         (board[2] == board[5] && board[5] == board[8] && board[2] == "O") ||
         (board[0] == board[4] && board[4] == board[8] && board[0] == "O") ||
         (board[2] == board[4] && board[4] == board[6] && board[2] == "O")) {
-            $("#winner").html("O won the match");
+            $(".winner-box").addClass("pumpkin");
+            $("#winner").html("\"O\" won the match");
             running = false;
     }
 }

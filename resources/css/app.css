@@ -35,3 +35,12 @@ button {
 .belize-hole {
     background-color: #2980b9;
 }
+
+.winner-box {
+    color: white;
+    margin: auto 42%;
+    width: 200px;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+}
